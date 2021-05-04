@@ -6,7 +6,9 @@ module.exports = (sequelize, DataTypes) => {
       name: { type: DataTypes.STRING, allowNull: false },
       lastName: { type: DataTypes.STRING, allowNull: false, field: 'last_name' },
       email: { type: DataTypes.STRING, allowNull: false, unique: true },
-      password: { type: DataTypes.STRING, allowNull: false }
+      password: { type: DataTypes.STRING, allowNull: false },
+      created_at: { type: DataTypes.DATE },
+      updated_at: { type: DataTypes.DATE }
     },
     {
       tableName: 'users'
