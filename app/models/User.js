@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       lastName: { type: DataTypes.STRING, allowNull: false, field: 'last_name' },
       email: { type: DataTypes.STRING, allowNull: false, unique: true },
       password: { type: DataTypes.STRING, allowNull: false },
-      created_at: { type: DataTypes.DATE },
-      updated_at: { type: DataTypes.DATE }
+      createdAt: { type: DataTypes.DATE },
+      updatedAt: { type: DataTypes.DATE }
     },
     {
       tableName: 'users'
