@@ -8,8 +8,8 @@ module.exports = {
       last_name: { type: Sequelize.STRING, allowNull: false },
       email: { type: Sequelize.STRING, allowNull: false, unique: true },
       password: { type: Sequelize.STRING, allowNull: false },
-      created_at: Sequelize.DATE,
-      updated_at: Sequelize.DATE
+      created_at: { type: Sequelize.DATE },
+      updated_at: { type: Sequelize.DATE }
     }),
 
   down: queryInterface => queryInterface.dropTable('users')
