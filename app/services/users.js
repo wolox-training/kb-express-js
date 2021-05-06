@@ -6,7 +6,7 @@ const { generateHash } = require('../helpers/crypt_texts');
 
 const pathLogger = 'services:users';
 
-const getUser = async email => {
+exports.getUserByEmail = async email => {
   try {
     const result = await UserModel.findOne({ where: { email } });
     return result;
@@ -23,14 +23,9 @@ const emailIsValid = email => {
 
 const passwordIsValid = password => /^([a-zA-Z0-9_-]){8}$/.test(password);
 
-exports.signUp = async ({ name, lastName, email, password }) => {
+exports.createUser = async ({ name, lastName, email, password }) => {
   if (!emailIsValid(email)) {
     throw badRequestError('Allowed domain for email are domains of Wolox');
-  }
-
-  const existUser = await getUser(email);
-  if (existUser) {
-    throw badRequestError('Email already exists');
   }
 
   if (!passwordIsValid(password)) {
