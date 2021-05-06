@@ -47,6 +47,12 @@ const config = {
     },
     quoteApi: {
       url: process.env.URL_QUOTES_API
+    },
+    business: {
+      allowedEmailDomains: process.env.ALLOWED_EMAIL_DOMAINS
+    },
+    crypt: {
+      salt: process.env.SALT_CRYPT
     }
   }
 };

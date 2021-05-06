@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { badRequest } = require('../errors');
+const { badRequestError } = require('../errors');
 
 const getFormattedErrors = rawErrors =>
   rawErrors.reduce((acc, curr) => ({ ...acc, [curr.param]: curr.msg }), {});
@@ -7,12 +7,12 @@ const getFormattedErrors = rawErrors =>
 const validationSchema = (req, res, next) => {
   const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    const formattedErrors = getFormattedErrors(errors.array());
-    return next(badRequest(formattedErrors));
+  if (errors.isEmpty()) {
+    return next();
   }
 
-  return next();
+  const formattedErrors = getFormattedErrors(errors.array());
+  return next(badRequestError(formattedErrors));
 };
 
 module.exports = validationSchema;
