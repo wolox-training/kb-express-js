@@ -15,5 +15,5 @@ exports.badRequestError = message => internalError(message, exports.BAD_REQUEST)
 exports.UNPROCESSABLE_ENTITY = 'unprocessable_entity';
 exports.unprocessableEntity = message => internalError(message, exports.UNPROCESSABLE_ENTITY);
 
-exports.CONFLICT = 'conflict';
-exports.conflict = message => internalError(message, exports.CONFLICT);
+exports.CONFLICT_ERROR = 'conflict_error';
+exports.conflictError = message => internalError(message, exports.CONFLICT_ERROR);

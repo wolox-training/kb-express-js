@@ -1,19 +1,17 @@
 const { createUser: signUpService, getUserByEmail } = require('../services/users');
 const { signUp: mapperUser } = require('../mappers/users');
 const { signUp: serializerUser } = require('../serializers/users');
-const { conflict } = require('../errors');
+const { conflictError } = require('../errors');
 const { generateHash } = require('../helpers/crypt_texts');
 const logger = require('../logger');
 
 exports.signUp = async (req, res, next) => {
   try {
-    const dataFromBody = req.body;
-    dataFromBody.password = generateHash(dataFromBody.password);
-    const userData = mapperUser(dataFromBody);
-
+    const userData = mapperUser(req.body);
+    userData.password = generateHash(userData.password);
     const existUser = await getUserByEmail(userData.email);
     if (existUser) {
-      return next(conflict('Email already exists'));
+      return next(conflictError('Email already exists'));
     }
 
     const signUpResult = await signUpService(userData);
