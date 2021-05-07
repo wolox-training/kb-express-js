@@ -6,11 +6,13 @@ module.exports = [
     .trim()
     .isString()
     .notEmpty()
+    .exists()
     .withMessage('is required'),
   body('last_name')
     .trim()
     .isString()
     .notEmpty()
+    .exists()
     .withMessage('is required'),
   body('email')
     .matches(allowedEmailDomains)
@@ -21,6 +23,7 @@ module.exports = [
   body('email')
     .trim()
     .notEmpty()
+    .exists()
     .withMessage('is required'),
   body('password')
     .isAlphanumeric()
@@ -29,5 +32,6 @@ module.exports = [
   body('password')
     .trim()
     .notEmpty()
+    .exists()
     .withMessage('is required')
 ];
