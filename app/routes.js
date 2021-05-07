@@ -6,5 +6,5 @@ const validationSchema = require('./middlewares/validation_schema');
 
 exports.init = app => {
   app.get('/health', healthCheck);
-  app.post('/users', signUpSchema(), validationSchema, signUp);
+  app.post('/users', [signUpSchema, validationSchema], signUp);
 };

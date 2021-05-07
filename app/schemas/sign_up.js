@@ -1,24 +1,33 @@
 const { body } = require('express-validator');
+const { allowedEmailDomains } = require('../../config').common.business;
 
-module.exports = () => [
+module.exports = [
   body('name')
-    .not()
     .trim()
-    .isEmpty()
+    .isString()
+    .notEmpty()
     .withMessage('is required'),
   body('last_name')
-    .not()
     .trim()
-    .isEmpty()
+    .isString()
+    .notEmpty()
     .withMessage('is required'),
   body('email')
-    .not()
+    .matches(allowedEmailDomains)
+    .withMessage('allowed domain are domains of Wolox'),
+  body('email')
+    .isEmail()
+    .withMessage('must be a valid email'),
+  body('email')
     .trim()
-    .isEmpty()
+    .notEmpty()
     .withMessage('is required'),
   body('password')
-    .not()
+    .isAlphanumeric()
+    .isLength({ min: 8 })
+    .withMessage('must be alphanumeric and have a minimum of 8 characters'),
+  body('password')
     .trim()
-    .isEmpty()
+    .notEmpty()
     .withMessage('is required')
 ];

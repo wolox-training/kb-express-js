@@ -1,8 +1,6 @@
 const { User: UserModel } = require('../models');
-const { databaseError, badRequestError } = require('../errors');
+const { databaseError } = require('../errors');
 const logger = require('../logger');
-const config = require('../../config').common.business;
-const { generateHash } = require('../helpers/crypt_texts');
 
 const pathLogger = 'services:users';
 
@@ -16,27 +14,12 @@ exports.getUserByEmail = async email => {
   }
 };
 
-const emailIsValid = email => {
-  const regex = new RegExp(config.allowedEmailDomains);
-  return regex.test(email);
-};
-
-const passwordIsValid = password => /^([a-zA-Z0-9_-]){8}$/.test(password);
-
 exports.createUser = async ({ name, lastName, email, password }) => {
-  if (!emailIsValid(email)) {
-    throw badRequestError('Allowed domain for email are domains of Wolox');
-  }
-
-  if (!passwordIsValid(password)) {
-    throw badRequestError('The password does not meet the requirements');
-  }
-
   try {
     const creationResult = await UserModel.create({
       name,
       lastName,
-      password: generateHash(password),
+      password,
       email
     });
     return creationResult;
