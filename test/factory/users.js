@@ -3,11 +3,10 @@ const faker = require('faker');
 const { User } = require('../../app/models');
 
 factory.define('User', User, {
-  name: faker.random.alpha(),
-  lastName: faker.random.alpha(),
+  name: faker.name.firstName(),
+  lastName: faker.name.lastName(),
   email: faker.internet.email(null, null, 'wolox.co'),
-  password: faker.random.alpha(8),
-  last_name: faker.random.word()
+  password: faker.random.alpha(8)
 });
 module.exports = {
   create: params => factory.create('User', params),

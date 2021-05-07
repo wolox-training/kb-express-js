@@ -7,7 +7,7 @@ const server = supertest(app);
 
 describe('Signup suite tests', () => {
   test('User created OK', async done => {
-    const userTest = await factory.attributes();
+    const userTest = await factory.attributes({ last_name: 'test' });
     const result = await server.post('/users').send(userTest);
 
     expect(result.statusCode).toBe(201);
@@ -15,8 +15,8 @@ describe('Signup suite tests', () => {
   });
 
   test('Email already exists', async done => {
-    await factory.create({ email: 'test1@wolox.com' });
-    const userTest = await factory.attributes({ email: 'test1@wolox.com' });
+    await factory.create({ email: 'test1@wolox.com', last_name: 'test' });
+    const userTest = await factory.attributes({ email: 'test1@wolox.com', last_name: 'test' });
     const result = await server.post('/users').send(userTest);
 
     expect(result.statusCode).toBe(409);
@@ -25,7 +25,7 @@ describe('Signup suite tests', () => {
   });
 
   test('Wrong password', async done => {
-    const userTest = await factory.attributes({ password: 'abcdefg' });
+    const userTest = await factory.attributes({ password: 'abcdefg', last_name: 'test' });
     const result = await server.post('/users').send(userTest);
 
     expect(result.statusCode).toBe(422);
