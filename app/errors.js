@@ -17,3 +17,6 @@ exports.unprocessableEntityError = message => internalError(message, exports.UNP
 
 exports.CONFLICT_ERROR = 'conflict_error';
 exports.conflictError = message => internalError(message, exports.CONFLICT_ERROR);
+
+exports.UNAUTHORIZED_ERROR = 'unauthorized_error';
+exports.unauthorizedError = message => internalError(message, exports.UNAUTHORIZED_ERROR);
