@@ -1,35 +1,7 @@
 module.exports = {
   '/users': {
-    get: {
-      tags: ['CRUD operations'],
-      description: 'Get users',
-      operationId: 'getUsers',
-      parameters: [
-        {
-          name: 'page',
-          in: 'query',
-          schema: {
-            type: 'integer',
-            default: 1
-          },
-          required: false
-        }
-      ],
-      responses: {
-        200: {
-          description: 'Users were obtained',
-          content: {
-            'application/json': {
-              schema: {
-                $ref: '#/components/schemas/Users'
-              }
-            }
-          }
-        }
-      }
-    },
     post: {
-      tags: ['CRUD operations'],
+      tags: ['Create users'],
       description: 'Create user',
       operationId: 'createUser',
       parameters: [],
@@ -37,26 +9,63 @@ module.exports = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/CreationUser'
             }
           }
         },
         required: true
       },
       responses: {
-        200: {
-          description: 'New user was created'
-        },
-        400: {
-          description: 'Invalid parameters',
+        201: {
+          description: 'New user was created',
           content: {
             'application/json': {
               schema: {
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/User'
+              }
+            }
+          }
+        },
+        422: {
+          description: 'Invalid parameters in request body',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/ObjectError'
               },
               example: {
-                message: 'User´s email already exists',
-                internal_code: 'invalid_parameters'
+                message: {
+                  name: 'is required'
+                },
+                internal_code: 'unprocessable_entity_error'
+              }
+            }
+          }
+        },
+        409: {
+          description: 'Email already exists',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/StringError'
+              },
+              example: {
+                message: 'Email already exists',
+                internal_code: 'conflict_error'
+              }
+            }
+          }
+        },
+        503: {
+          description: 'Internal error',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/StringError'
+              },
+              example: {
+                message: 'Error signUp user',
+                internal_code: 'database_error'
               }
             }
           }
