@@ -16,7 +16,7 @@ exports.signUp = async (req, res, next) => {
 
     const signUpResult = await signUpService(userData);
     logger.info(`User created ${signUpResult.name}`);
-    return res.status(200).send(serializerUser(signUpResult));
+    return res.status(201).send(serializerUser(signUpResult));
   } catch (error) {
     return next(error);
   }

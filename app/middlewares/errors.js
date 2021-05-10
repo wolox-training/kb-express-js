@@ -8,7 +8,7 @@ const statusCodes = {
   [errors.DEFAULT_ERROR]: 500,
   [errors.BAD_REQUEST]: 400,
   [errors.CONFLICT_ERROR]: 409,
-  [errors.UNPROCESSABLE_ENTITY]: 422
+  [errors.UNPROCESSABLE_ENTITY_ERROR]: 422
 };
 
 exports.handle = (error, req, res, next) => {
