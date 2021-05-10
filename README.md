@@ -2,6 +2,8 @@
 
 WTraining
 
+[![Build Status](https://travis-ci.org/wolox-training/kb-express-js.svg?branch=master)](https://travis-ci.org/wolox-training/kb-express-js)
+
 ## First steps
 
 #### Installing node
