@@ -13,8 +13,11 @@ describe('Signin suite tests', () => {
     userTest = await factory.attributes({ ...data, last_name: 'test' });
   });
 
-  test('Token created OK', async done => {
+  beforeEach(async () => {
     await server.post('/users').send(userTest);
+  });
+
+  test('Token created OK', async done => {
     const result = await server.post('/users/sessions').send(data);
 
     expect(result.statusCode).toBe(200);
@@ -23,7 +26,6 @@ describe('Signin suite tests', () => {
   });
 
   test('Email domain not allowed', async done => {
-    await server.post('/users').send(userTest);
     const result = await server.post('/users/sessions').send({ ...data, email: 'test@gmail.com' });
 
     expect(result.statusCode).toBe(422);
@@ -32,7 +34,6 @@ describe('Signin suite tests', () => {
   });
 
   test('Wrong password', async done => {
-    await server.post('/users').send(userTest);
     const result = await server.post('/users/sessions').send({ ...data, password: 'wrong123' });
 
     expect(result.statusCode).toBe(401);
@@ -41,7 +42,6 @@ describe('Signin suite tests', () => {
   });
 
   test('No mandatory fields', async done => {
-    await server.post('/users').send(userTest);
     const result = await server.post('/users/sessions').send({});
 
     expect(result.statusCode).toBe(422);
