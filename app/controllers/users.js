@@ -1,12 +1,9 @@
-const {
-  createUser: signUpService,
-  getUserByEmail,
-  createToken: signInService
-} = require('../services/users');
+const { createUser: signUpService, getUserByEmail } = require('../services/users');
 const { signUp: mapperUser, signIn: mapperSignIn } = require('../mappers/users');
-const { signUp: serializerUser, signIn: serializerSignIn } = require('../serializers/users');
+const { signUp: serializerUser } = require('../serializers/users');
 const { conflictError, unauthorizedError } = require('../errors');
 const { generateHash, verify } = require('../helpers/hash_texts');
+const { generate: generateJwt } = require('../helpers/manage_jwt');
 const { encrypt } = require('../helpers/manage_crypt');
 const logger = require('../logger');
 
@@ -37,13 +34,13 @@ exports.signIn = async (req, res, next) => {
     }
 
     if (!verify(userData.password, existUser.password)) {
-      return next(unauthorizedError('User not found'));
+      return next(unauthorizedError('Wrong password'));
     }
 
     const encryptedId = encrypt(String(existUser.id));
-    const token = signInService({ id: encryptedId });
+    const token = generateJwt({ id: encryptedId }, 3600 * 24);
     logger.info(`Token created ${token}`);
-    return res.status(200).send(serializerSignIn(token));
+    return res.status(200).send({ token });
   } catch (error) {
     return next(error);
   }

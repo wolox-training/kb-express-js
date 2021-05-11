@@ -16,7 +16,7 @@ module.exports = [
   body('password')
     .isAlphanumeric()
     .isLength({ min: 8 })
-    .withMessage('must be alphanumeric and have a minimum of 8 characters'),
+    .withMessage('is not valid'),
   body('password')
     .trim()
     .notEmpty()

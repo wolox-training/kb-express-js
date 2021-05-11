@@ -1,5 +1,3 @@
-exports.signIn = token => ({ token });
-
 exports.signUp = data => ({
   id: data.id,
   name: data.name,
