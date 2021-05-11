@@ -31,7 +31,7 @@ exports.createUser = async ({ name, lastName, email, password }) => {
 
 exports.createToken = ({ id }) => {
   try {
-    const token = generateJwt({ id }, 3600 * 24);
+    const token = generateJwt({ auth: id }, 3600 * 24);
     return token;
   } catch (error) {
     logger.error(`${userServicePath} --- Error db signUp user --- ${error}`);
