@@ -17,9 +17,6 @@ addons:
 services:
   - postgresql
 
-install:
-  - npm install
-
 before_script:
   - psql -c "CREATE DATABASE bookstest;" -U postgres
   - npm run migrations-test
