@@ -9,6 +9,9 @@ exports.config = {
       tokenSecret: 'test',
       cryptSecret: 'test'
     },
+    business: {
+      allowedEmailDomains: '@wolox(?:.co|.ar|.com)$'
+    },
     session: {
       secret: 'some-super-secret'
     }
