@@ -21,3 +21,11 @@ exports.signUp = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.getUsers = async (req, res, next) => {
+  try {
+    return await res.status(200).send('test ok');
+  } catch (error) {
+    return next(error);
+  }
+};
