@@ -1,5 +1,6 @@
-const { createUser: signUpService, getUserByEmail } = require('../services/users');
+const { createUser: signUpService, getUserByEmail, getUsers } = require('../services/users');
 const { signUp: mapperUser, signIn: mapperSignIn } = require('../mappers/users');
+const mapperPagination = require('../mappers/pagination');
 const { signUp: serializerUser } = require('../serializers/users');
 const { conflictError, unauthorizedError } = require('../errors');
 const { generateHash, verify } = require('../helpers/hash_texts');
@@ -41,6 +42,18 @@ exports.signIn = async (req, res, next) => {
     const token = generateJwt({ id: encryptedId }, 3600 * 24);
     logger.info(`Token created ${token}`);
     return res.status(200).send({ token });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+exports.getUsers = async (req, res, next) => {
+  try {
+    const pagination = mapperPagination(req.query.current_page, req.query.per_page);
+    const { count, users } = await getUsers(pagination);
+    const usersResponse = users.map(user => serializerUser(user));
+
+    return await res.status(200).send({ users: usersResponse, all_items: count });
   } catch (error) {
     return next(error);
   }

@@ -7,3 +7,12 @@ exports.generate = (data, expInSeconds) => {
 
   return jwt.encode({ exp, iat, data }, config.tokenSecret);
 };
+
+exports.decode = token => jwt.decode(token, config.tokenSecret);
+
+exports.getTokenFromReq = req => {
+  const { authorization } = req.headers;
+  const token = authorization.replace('Bearer ', '');
+
+  return exports.decode(token);
+};

@@ -27,3 +27,11 @@ exports.createUser = async ({ name, lastName, email, password }) => {
     throw databaseError('Error signUp user');
   }
 };
+
+exports.getUsers = ({ limit, offset }) =>
+  UserModel.findAndCountAll({ offset, limit })
+    .then(result => ({ count: result.count, users: result.rows }))
+    .catch(error => {
+      logger.error(`${userServicePath} --- Error db getting users list --- ${error}`);
+      throw databaseError('Error getting users list');
+    });
