@@ -2,6 +2,7 @@ const supertest = require('supertest');
 const app = require('../../app');
 const factory = require('../factory/users');
 const { UNAUTHORIZED_ERROR } = require('../../app/errors');
+const { getToken } = require('../tools');
 
 const server = supertest(app);
 const userData = { email: 'test@wolox.co', password: 'test1234', last_name: 'Test las name' };
@@ -13,15 +14,10 @@ const creatUsers = async () => {
   await server.post('/users').send(user2);
 };
 
-const getToken = async () => {
-  const result = await server.post('/users/sessions').send(userData);
-  return result.body.token;
-};
-
 describe('Signin suite tests', () => {
   test('Return users list OK', async done => {
     await creatUsers();
-    const token = await getToken();
+    const token = await getToken(userData);
     const result = await server.get('/users').set({ Authorization: token });
 
     expect(result.statusCode).toBe(200);

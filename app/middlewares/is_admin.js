@@ -4,7 +4,6 @@ const { forbiddenError } = require('../errors');
 module.exports = (req, res, next) => {
   try {
     const dataToken = getTokenFromReq(req);
-
     if (dataToken.data.auth.isAdmin) {
       return next();
     }
