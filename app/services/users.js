@@ -28,12 +28,10 @@ exports.createUser = async ({ name, lastName, email, password }) => {
   }
 };
 
-exports.getUsers = async ({ limit, offset }) => {
-  try {
-    const users = await UserModel.findAndCountAll({ offset, limit });
-    return users;
-  } catch (error) {
-    logger.error(`${userServicePath} --- Error db getting users list --- ${error}`);
-    throw databaseError('Error getting users list');
-  }
-};
+exports.getUsers = ({ limit, offset }) =>
+  UserModel.findAndCountAll({ offset, limit })
+    .then(result => ({ count: result.count, users: result.rows }))
+    .catch(error => {
+      logger.error(`${userServicePath} --- Error db getting users list --- ${error}`);
+      throw databaseError('Error getting users list');
+    });

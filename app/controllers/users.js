@@ -50,10 +50,9 @@ exports.signIn = async (req, res, next) => {
 exports.getUsers = async (req, res, next) => {
   try {
     const pagination = mapperPagination(req.query.currentPage, req.query.perPage);
-    const { count, rows } = await getUsers(pagination);
+    const { count, users } = await getUsers(pagination);
 
-    const users = serializerUsersList(rows);
-    return await res.status(200).send({ users, all_items: count });
+    return await res.status(200).send({ users: serializerUsersList(users), all_items: count });
   } catch (error) {
     return next(error);
   }
