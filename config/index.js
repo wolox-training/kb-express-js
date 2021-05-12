@@ -52,7 +52,9 @@ const config = {
       allowedEmailDomains: process.env.ALLOWED_EMAIL_DOMAINS
     },
     crypt: {
-      salt: process.env.SALT_CRYPT
+      salt: process.env.SALT_CRYPT,
+      tokenSecret: process.env.TOKEN_SECRET,
+      cryptSecret: process.env.CRYPT_SECRET
     }
   }
 };

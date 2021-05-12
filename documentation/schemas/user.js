@@ -20,6 +20,17 @@ module.exports = {
     example: 'Test1234',
     minimum: 8
   },
+  CreationToken: {
+    type: 'object',
+    properties: {
+      email: {
+        $ref: '#/components/schemas/userEmail'
+      },
+      password: {
+        $ref: '#/components/schemas/password'
+      }
+    }
+  },
   CreationUser: {
     type: 'object',
     properties: {
