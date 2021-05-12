@@ -1,5 +1,6 @@
 const jwt = require('jwt-simple');
 const config = require('../../config').common.crypt;
+const { decryptObject } = require('./manage_crypt');
 
 exports.generate = (data, expInSeconds) => {
   const iat = Date.now() / 1000;
@@ -8,7 +9,14 @@ exports.generate = (data, expInSeconds) => {
   return jwt.encode({ exp, iat, data }, config.tokenSecret);
 };
 
-exports.decode = token => jwt.decode(token, config.tokenSecret);
+exports.decode = token => {
+  const dataJwt = jwt.decode(token, config.tokenSecret);
+  if (dataJwt.data.auth) {
+    dataJwt.data.auth = decryptObject(dataJwt.data.auth);
+  }
+
+  return dataJwt;
+};
 
 exports.getTokenFromReq = req => {
   const { authorization } = req.headers;
