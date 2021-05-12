@@ -71,6 +71,57 @@ module.exports = {
           }
         }
       }
+    },
+    get: {
+      tags: ['Get users list'],
+      description: 'Get users list',
+      operationId: 'getUsers',
+      parameters: [],
+      security: [
+        {
+          bearerAuth: []
+        }
+      ],
+      responses: {
+        200: {
+          description: 'New user was created',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/Users'
+              }
+            }
+          }
+        },
+        401: {
+          description: 'Invalid parameters in request body',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/StringError'
+              },
+              example: {
+                message: 'Access is private',
+                internal_code: 'unauthorized_error'
+              }
+            }
+          }
+        },
+        503: {
+          description: 'Internal error',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/StringError'
+              },
+              example: {
+                message: 'Error getting users list',
+                internal_code: 'database_error'
+              }
+            }
+          }
+        }
+      }
     }
   }
 };

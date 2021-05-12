@@ -5,6 +5,11 @@ module.exports = {
       description: 'Create admin user',
       operationId: 'createAdminUser',
       parameters: [],
+      security: [
+        {
+          bearerAuth: []
+        }
+      ],
       requestBody: {
         content: {
           'application/json': {
@@ -32,6 +37,20 @@ module.exports = {
             'application/json': {
               schema: {
                 $ref: '#/components/schemas/User'
+              }
+            }
+          }
+        },
+        401: {
+          description: 'Invalid parameters in request body',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/StringError'
+              },
+              example: {
+                message: 'Access is private',
+                internal_code: 'unauthorized_error'
               }
             }
           }
