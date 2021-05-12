@@ -4,7 +4,7 @@ const { signUp: serializerUser } = require('../serializers/users');
 const { conflictError, unauthorizedError } = require('../errors');
 const { generateHash, verify } = require('../helpers/hash_texts');
 const { generate: generateJwt } = require('../helpers/manage_jwt');
-const { encrypt } = require('../helpers/manage_crypt');
+const { encryptObject } = require('../helpers/manage_crypt');
 const logger = require('../logger');
 
 exports.signUp = async (req, res, next) => {
@@ -37,8 +37,8 @@ exports.signIn = async (req, res, next) => {
       return next(unauthorizedError('Wrong password'));
     }
 
-    const encryptedId = encrypt(String(existUser.id));
-    const token = generateJwt({ id: encryptedId }, 3600 * 24);
+    const encryptedAuth = encryptObject({ id: existUser.id, isAdmin: existUser.isAdmin });
+    const token = generateJwt({ auth: encryptedAuth }, 3600 * 24);
     logger.info(`Token created ${token}`);
     return res.status(200).send({ token });
   } catch (error) {
