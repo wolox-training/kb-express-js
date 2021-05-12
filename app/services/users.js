@@ -29,24 +29,22 @@ exports.createUser = async ({ name, lastName, email, password, isAdmin = false }
   }
 };
 
-exports.makeAdminUser = async email => {
-  try {
-    const updatedUser = await UserModel.update(
-      {
-        isAdmin: true
-      },
-      {
-        where: { email },
-        returning: true,
-        plain: true
-      }
-    );
-    return updatedUser[1];
-  } catch (error) {
-    logger.error(`${userServicePath} --- Error db making admin user --- ${error}`);
-    throw databaseError('Error making admin user');
-  }
-};
+exports.makeAdminUser = email =>
+  UserModel.update(
+    {
+      isAdmin: true
+    },
+    {
+      where: { email },
+      returning: true,
+      plain: true
+    }
+  )
+    .then(updatedUser => updatedUser[1])
+    .catch(error => {
+      logger.error(`${userServicePath} --- Error db making admin user --- ${error}`);
+      throw databaseError('Error making admin user');
+    });
 
 exports.getUsers = ({ limit, offset }) =>
   UserModel.findAndCountAll({ offset, limit })
