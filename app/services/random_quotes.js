@@ -2,7 +2,7 @@ const { getRequest } = require('../helpers/http_requests');
 const { defaultError } = require('../errors');
 const config = require('../../config').common.quoteApi;
 
-exports.getRandomQuote = async () => {
+exports.getRandomQuote = async maxLength => {
   try {
     const result = await getRequest(config.url);
     return result.data.joke;
