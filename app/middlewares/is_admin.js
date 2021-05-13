@@ -1,8 +1,9 @@
 const { forbiddenError } = require('../errors');
+const { roles } = require('../../config/constants');
 
 module.exports = (req, res, next) => {
   try {
-    if (req.authUser.isAdmin) {
+    if (req.authUser.role === roles.ADMIN) {
       return next();
     }
 

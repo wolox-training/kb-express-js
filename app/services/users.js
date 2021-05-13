@@ -2,6 +2,7 @@ const { User: UserModel } = require('../models');
 const { databaseError } = require('../errors');
 const { userService: userServicePath } = require('../../config/constants').loggerPaths;
 const logger = require('../logger');
+const { roles } = require('../../config/constants');
 
 exports.getUserByEmail = async email => {
   try {
@@ -32,7 +33,7 @@ exports.createUser = async ({ name, lastName, email, password, isAdmin = false }
 exports.makeAdminUser = email =>
   UserModel.update(
     {
-      isAdmin: true
+      role: roles.ADMIN
     },
     {
       where: { email },

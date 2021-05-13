@@ -13,7 +13,7 @@ const userData = {
 };
 
 const createAdminUser = async () => {
-  await factory.create({ ...userData, isAdmin: true, password: generateHash(userData.password) });
+  await factory.create({ ...userData, role: '1', password: generateHash(userData.password) });
 };
 
 const createRegularUser = async () => {

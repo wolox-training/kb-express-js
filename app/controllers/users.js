@@ -38,7 +38,7 @@ exports.signIn = async (req, res, next) => {
       return next(unauthorizedError('Wrong password'));
     }
 
-    const encryptedAuth = encryptObject({ id: existUser.id, isAdmin: existUser.isAdmin });
+    const encryptedAuth = encryptObject({ id: existUser.id, role: existUser.role });
     const token = generateJwt({ auth: encryptedAuth }, 3600 * 24);
     logger.info(`Token created ${token}`);
     return res.status(200).send({ token });
