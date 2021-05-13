@@ -14,14 +14,14 @@ exports.getUserByEmail = async email => {
   }
 };
 
-exports.createUser = async ({ name, lastName, email, password, isAdmin = false }) => {
+exports.createUser = async ({ name, lastName, email, password, role = roles.REGULAR }) => {
   try {
     const creationResult = await UserModel.create({
       name,
       lastName,
       password,
       email,
-      isAdmin
+      role
     });
     return creationResult;
   } catch (error) {
