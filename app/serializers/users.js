@@ -3,5 +3,5 @@ exports.signUp = data => ({
   name: data.name,
   last_name: data.lastName,
   email: data.email,
-  is_admin: data.isAdmin
+  role: data.role
 });
