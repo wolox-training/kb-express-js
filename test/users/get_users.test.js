@@ -7,7 +7,7 @@ const { getToken } = require('../tools');
 const server = supertest(app);
 const userData = { email: 'test@wolox.co', password: 'test1234', last_name: 'Test las name' };
 
-const creatUsers = async () => {
+const createUsers = async () => {
   const user1 = await factory.attributes(userData);
   const user2 = await factory.attributes({ ...userData, email: 'test2@wolox.co' });
   await server.post('/users').send(user1);
@@ -16,7 +16,7 @@ const creatUsers = async () => {
 
 describe('Signin suite tests', () => {
   test('Return users list OK', async done => {
-    await creatUsers();
+    await createUsers();
     const token = await getToken(userData);
     const result = await server.get('/users').set({ Authorization: token });
 
