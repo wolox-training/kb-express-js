@@ -1,10 +1,11 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('weets', {
+  up: (queryInterface, Sequelize) => {
+    const { STRING: stringSequelize } = Sequelize;
+    return queryInterface.createTable('weets', {
       id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
-      content: { type: Sequelize.TEXT, allowNull: false },
+      content: { type: stringSequelize(140), allowNull: false },
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -15,7 +16,7 @@ module.exports = {
       },
       created_at: { type: Sequelize.DATE },
       updated_at: { type: Sequelize.DATE }
-    }),
-
+    });
+  },
   down: queryInterface => queryInterface.dropTable('weets')
 };
