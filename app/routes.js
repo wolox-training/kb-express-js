@@ -13,5 +13,5 @@ exports.init = app => {
   app.post('/users', [signUpSchema, validationSchema], signUp);
   app.post('/users/sessions', [signInSchema, validationSchema], signIn);
   app.get('/users', [authenticationMiddleware, paginationSchema, validationSchema], getUsers);
-  app.post('/users', [authenticationMiddleware], createWeet);
+  app.post('/weets', [authenticationMiddleware], createWeet);
 };

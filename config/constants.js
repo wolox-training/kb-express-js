@@ -1,5 +1,6 @@
 module.exports = {
   loggerPaths: {
-    userService: 'services:users'
+    userService: 'services:users',
+    weetService: 'services:weet'
   }
 };
