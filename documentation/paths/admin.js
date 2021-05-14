@@ -1,10 +1,15 @@
 module.exports = {
-  '/users': {
+  '/admin/users': {
     post: {
-      tags: ['Create users'],
-      description: 'Create user',
-      operationId: 'createUser',
+      tags: ['Create admin users'],
+      description: 'Create admin user',
+      operationId: 'createAdminUser',
       parameters: [],
+      security: [
+        {
+          bearerAuth: []
+        }
+      ],
       requestBody: {
         content: {
           'application/json': {
@@ -17,11 +22,35 @@ module.exports = {
       },
       responses: {
         201: {
-          description: 'New user was created',
+          description: 'New admin user was created',
           content: {
             'application/json': {
               schema: {
                 $ref: '#/components/schemas/User'
+              }
+            }
+          }
+        },
+        200: {
+          description: 'New admin user was updated',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/User'
+              }
+            }
+          }
+        },
+        401: {
+          description: 'Invalid parameters in request body',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/StringError'
+              },
+              example: {
+                message: 'Access is private',
+                internal_code: 'unauthorized_error'
               }
             }
           }
@@ -42,7 +71,7 @@ module.exports = {
             }
           }
         },
-        409: {
+        403: {
           description: 'Email already exists',
           content: {
             'application/json': {
@@ -50,8 +79,8 @@ module.exports = {
                 $ref: '#/components/schemas/StringError'
               },
               example: {
-                message: 'Email already exists',
-                internal_code: 'conflict_error'
+                message: 'Access is only for admin',
+                internal_code: 'forbidden_error'
               }
             }
           }
