@@ -14,7 +14,7 @@ const createUsers = async () => {
   await server.post('/users').send(user2);
 };
 
-describe('Signin suite tests', () => {
+describe('Get users suite tests', () => {
   test('Return users list OK', async done => {
     await createUsers();
     const token = await getToken(userData);

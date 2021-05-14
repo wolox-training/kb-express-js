@@ -9,6 +9,7 @@ const statusCodes = {
   [errors.BAD_REQUEST]: 400,
   [errors.UNAUTHORIZED_ERROR]: 401,
   [errors.FORBIDDEN_ERROR]: 403,
+  [errors.NOT_FOUND_ERROR]: 404,
   [errors.CONFLICT_ERROR]: 409,
   [errors.UNPROCESSABLE_ENTITY_ERROR]: 422
 };

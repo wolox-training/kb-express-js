@@ -84,7 +84,7 @@ module.exports = {
       ],
       responses: {
         200: {
-          description: 'New user was created',
+          description: 'Users list',
           content: {
             'application/json': {
               schema: {
