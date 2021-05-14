@@ -6,5 +6,8 @@ module.exports = {
   roles: {
     REGULAR: '0',
     ADMIN: '1'
+  },
+  weets: {
+    maxLength: 140
   }
 };

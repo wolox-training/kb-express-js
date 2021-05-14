@@ -94,7 +94,7 @@ module.exports = {
           }
         },
         401: {
-          description: 'Invalid parameters in request body',
+          description: 'User no authenticated',
           content: {
             'application/json': {
               schema: {
