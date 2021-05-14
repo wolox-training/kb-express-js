@@ -1,4 +1,6 @@
 const supertest = require('supertest');
+const axios = require('axios');
+const faker = require('faker');
 const app = require('../../app');
 const { getToken, createRegularUser } = require('../tools');
 const { UNAUTHORIZED_ERROR } = require('../../app/errors');
@@ -10,7 +12,16 @@ const userData = {
   last_name: 'test last name'
 };
 
+jest.mock('axios');
+
 describe('Create Weets suite tests', () => {
+  beforeAll(() => {
+    axios.get.mockResolvedValue({
+      data: {
+        joke: faker.lorem.word()
+      }
+    });
+  });
   test('Weet created OK', async done => {
     await createRegularUser(userData);
     const token = await getToken(userData);
