@@ -1,7 +1,7 @@
-const signUp = require('./sign_up');
+const users = require('./users');
 const signIn = require('./sign_in');
 
 module.exports = {
-  ...signUp,
+  ...users,
   ...signIn
 };

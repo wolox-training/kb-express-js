@@ -2,6 +2,7 @@ const { User: UserModel } = require('../models');
 const { databaseError } = require('../errors');
 const { userService: userServicePath } = require('../../config/constants').loggerPaths;
 const logger = require('../logger');
+const { roles } = require('../../config/constants');
 
 exports.getUserByEmail = async email => {
   try {
@@ -13,13 +14,14 @@ exports.getUserByEmail = async email => {
   }
 };
 
-exports.createUser = async ({ name, lastName, email, password }) => {
+exports.createUser = async ({ name, lastName, email, password, role = roles.REGULAR }) => {
   try {
     const creationResult = await UserModel.create({
       name,
       lastName,
       password,
-      email
+      email,
+      role
     });
     return creationResult;
   } catch (error) {
@@ -27,6 +29,23 @@ exports.createUser = async ({ name, lastName, email, password }) => {
     throw databaseError('Error signUp user');
   }
 };
+
+exports.makeAdminUser = email =>
+  UserModel.update(
+    {
+      role: roles.ADMIN
+    },
+    {
+      where: { email },
+      returning: true,
+      plain: true
+    }
+  )
+    .then(updatedUser => updatedUser[1])
+    .catch(error => {
+      logger.error(`${userServicePath} --- Error db making admin user --- ${error}`);
+      throw databaseError('Error making admin user');
+    });
 
 exports.getUsers = ({ limit, offset }) =>
   UserModel.findAndCountAll({ offset, limit })

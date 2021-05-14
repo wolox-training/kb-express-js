@@ -20,3 +20,6 @@ exports.conflictError = message => internalError(message, exports.CONFLICT_ERROR
 
 exports.UNAUTHORIZED_ERROR = 'unauthorized_error';
 exports.unauthorizedError = message => internalError(message, exports.UNAUTHORIZED_ERROR);
+
+exports.FORBIDDEN_ERROR = 'forbidden_error';
+exports.forbiddenError = message => internalError(message, exports.FORBIDDEN_ERROR);
