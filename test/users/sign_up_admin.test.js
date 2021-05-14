@@ -2,27 +2,23 @@ const supertest = require('supertest');
 const app = require('../../app');
 const factory = require('../factory/users');
 const { generateHash } = require('../../app/helpers/hash_texts');
-const { getToken } = require('../tools');
+const { getToken, createRegularUser } = require('../tools');
 const { UNPROCESSABLE_ENTITY_ERROR, FORBIDDEN_ERROR } = require('../../app/errors');
 
 const server = supertest(app);
 const userData = {
   email: 'test@wolox.co',
   password: 'test1234',
-  last_name: 'Test las name'
+  last_name: 'test last name'
 };
 
 const createAdminUser = async () => {
   await factory.create({ ...userData, role: '1', password: generateHash(userData.password) });
 };
 
-const createRegularUser = async () => {
-  const user = await factory.create({
-    ...userData,
-    password: generateHash(userData.password),
-    email: 'test1@wolox.co'
-  });
-  return user;
+const regularTestData = {
+  ...userData,
+  email: 'test1@wolox.co'
 };
 
 describe('Signup admin suite tests', () => {
@@ -42,7 +38,7 @@ describe('Signup admin suite tests', () => {
 
   test('Update existing user', async done => {
     await createAdminUser();
-    const regularUser = await createRegularUser();
+    const regularUser = await createRegularUser(regularTestData);
     const token = await getToken(userData);
     const userTest = await factory.attributes({ ...userData, email: regularUser.email });
 
@@ -56,7 +52,7 @@ describe('Signup admin suite tests', () => {
   });
 
   test('User no admin try create admin', async done => {
-    const regularUser = await createRegularUser();
+    const regularUser = await createRegularUser(regularTestData);
     const token = await getToken({ ...userData, email: regularUser.email });
     const userTest = await factory.attributes({ ...userData, email: 'test2@wolox.co' });
 
