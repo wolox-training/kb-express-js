@@ -1,6 +1,6 @@
 const { healthCheck } = require('./controllers/healthCheck');
 const { signUp, signIn, getUsers } = require('./controllers/users');
-const { create: createWeet } = require('./controllers/weets');
+const { create: createWeet, getWeets } = require('./controllers/weets');
 const { signUpAdmin } = require('./controllers/admins');
 const signUpSchema = require('./schemas/sign_up');
 const signInSchema = require('./schemas/sign_in');
@@ -14,10 +14,11 @@ exports.init = app => {
   app.post('/users', [signUpSchema, validationSchema], signUp);
   app.post('/users/sessions', [signInSchema, validationSchema], signIn);
   app.get('/users', [authenticationMiddleware, paginationSchema, validationSchema], getUsers);
-  app.post('/weets', [authenticationMiddleware], createWeet);
   app.post(
     '/admin/users',
     [authenticationMiddleware, isAdminMiddleware, signUpSchema, validationSchema],
     signUpAdmin
   );
+  app.post('/weets', [authenticationMiddleware], createWeet);
+  app.get('/weets', [authenticationMiddleware], getWeets);
 };
