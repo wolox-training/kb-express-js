@@ -11,3 +11,11 @@ exports.createWeet = ({ content, userId }) =>
     logger.error(`${weetServicePath} --- Error db creating weet --- ${error}`);
     throw databaseError('Error creating weet');
   });
+
+exports.getWeets = ({ limit, offset }) =>
+  WeetModel.findAndCountAll({ offset, limit })
+    .then(result => ({ count: result.count, weets: result.rows }))
+    .catch(error => {
+      logger.error(`${weetServicePath} --- Error db getting weets list --- ${error}`);
+      throw databaseError('Error getting weets list');
+    });
